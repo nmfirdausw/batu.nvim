@@ -251,6 +251,28 @@ Available keymaps:
 | `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
 | `n`, `x` | `k`, `<Up>`     | Move up by visual line when wrapped, by count otherwise   |
 
+`autocmds` accepts:
+
+- `true` (default): create Batu's default autocmds
+- `false`: create none
+- a table: create the defaults except those set to `false`, by name
+
+```lua
+require("batu").setup({
+  autocmds = { highlight_yank = false },
+})
+```
+
+Available autocmds:
+
+| Name             | Event          | Action                                                  |
+| ---------------- | -------------- | ------------------------------------------------------- |
+| `highlight_yank` | `TextYankPost` | Briefly highlight yanked text                           |
+| `restore_cursor` | `BufReadPost`  | Restore the cursor to its last known position on reopen |
+| `auto_create_dir` | `BufWritePre` | Create missing parent directories before writing a file |
+| `auto_reload`    | `FocusGained`, `BufEnter` | Reload buffers changed on disk outside of Neovim |
+| `close_with_q`   | `FileType`     | Close help, quickfix, man and similar buffers with `q`  |
+
 `osc7` accepts:
 
 - `false` (default): do nothing
