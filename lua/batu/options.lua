@@ -14,4 +14,20 @@ return {
   timeoutlen = 300,
   undofile = true,
   updatetime = 250,
+
+  -- interface
+  cmdheight = 0,
+  cursorline = true,
+  cursorlineopt = "number",
+  laststatus = 3,
+  list = true,
+  listchars = { tab = "» ", trail = "·", nbsp = "␣" },
+  number = true,
+  pumheight = 10,
+  relativenumber = true,
+  scrolloff = 8,
+  sidescrolloff = 8,
+  signcolumn = "yes",
+  splitbelow = true,
+  splitright = true,
 }
