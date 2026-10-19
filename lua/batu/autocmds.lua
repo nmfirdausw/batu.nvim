@@ -26,6 +26,20 @@ local defaults = {
       end,
     },
   },
+  -- Create missing parent directories before writing a file
+  auto_create_dir = {
+    "BufWritePre",
+    {
+      desc = "Create missing parent directories before writing a file",
+      callback = function(args)
+        -- Skip URL-style buffers such as oil:// or scp://
+        if args.match:match("^%w%w+:[\\/][\\/]") then
+          return
+        end
+        vim.fn.mkdir(vim.fn.fnamemodify(args.match, ":p:h"), "p")
+      end,
+    },
+  },
 }
 
 ---@param overrides? table<string, boolean> autocmds by name, `false` skips one
