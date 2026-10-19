@@ -40,4 +40,9 @@ return {
   completeopt = "menuone,noselect",
   wildignorecase = true,
   wildmode = "noselect:lastused,full",
+
+  -- folding
+  foldexpr = "v:lua.vim.treesitter.foldexpr()",
+  foldlevelstart = 99,
+  foldmethod = "expr",
 }
