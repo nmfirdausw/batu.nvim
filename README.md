@@ -206,6 +206,11 @@ require("batu").setup({
 - `false`: apply none
 - a table: apply the defaults with your values merged on top
 
+`osc7` accepts:
+
+- `false` (default): do nothing
+- `true`: sync Neovim's working directory to the directory your terminal reports via OSC 7 (`:terminal` buffers)
+
 ---
 
 # The Vision
