@@ -10,6 +10,9 @@ local defaults = {
     -- Keep in visual mode while indenting
     ["<"] = { "<gv", { desc = "Shift left" } },
     [">"] = { ">gv", { desc = "Shift right" } },
+    -- Move selected lines up/down
+    J = { ":move '>+1<CR>gv=gv", { desc = "Move selection down" } },
+    K = { ":move '<-2<CR>gv=gv", { desc = "Move selection up" } },
   },
 }
 
