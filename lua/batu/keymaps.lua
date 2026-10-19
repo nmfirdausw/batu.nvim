@@ -6,6 +6,8 @@ local M = {}
 ---@type table<string, table<string, {[1]: string|function, [2]: table}>>
 local defaults = {
   n = {
+    -- Yank to end of line, matching D and C
+    Y = { "y$", { desc = "Yank to end of line" } },
     -- Keep cursor centered while scrolling/searching
     ["<C-d>"] = { "<C-d>zz", { desc = "Scroll down" } },
     ["<C-u>"] = { "<C-u>zz", { desc = "Scroll up" } },

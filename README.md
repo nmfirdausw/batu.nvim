@@ -237,6 +237,7 @@ Available keymaps:
 | `x`     | `>`              | Shift right, keeping the visual selection                 |
 | `x`     | `p`              | Paste over the selection without overwriting the register |
 | `x`     | `J`, `K`         | Move the selected lines down or up                        |
+| `n`     | `Y`              | Yank to the end of the line, matching `D` and `C`         |
 | `n`     | `<C-d>`, `<C-u>` | Scroll half a page, keeping the cursor centered           |
 | `n`     | `n`, `N`         | Jump to the next or previous search result, centered      |
 | `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
