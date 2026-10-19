@@ -251,6 +251,24 @@ Available keymaps:
 | `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
 | `n`, `x` | `k`, `<Up>`     | Move up by visual line when wrapped, by count otherwise   |
 
+`autocmds` accepts:
+
+- `true` (default): create Batu's default autocmds
+- `false`: create none
+- a table: create the defaults except those set to `false`, by name
+
+```lua
+require("batu").setup({
+  autocmds = { highlight_yank = false },
+})
+```
+
+Available autocmds:
+
+| Name             | Event          | Action                          |
+| ---------------- | -------------- | ------------------------------- |
+| `highlight_yank` | `TextYankPost` | Briefly highlight yanked text   |
+
 `osc7` accepts:
 
 - `false` (default): do nothing
