@@ -48,6 +48,17 @@ local defaults = {
       command = "checktime",
     },
   },
+  -- Close utility/read-only buffers with q
+  close_with_q = {
+    "FileType",
+    {
+      desc = "Close utility/read-only buffers with q",
+      pattern = { "help", "qf", "man", "lspinfo", "checkhealth" },
+      callback = function(args)
+        vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = args.buf, silent = true, desc = "Close window" })
+      end,
+    },
+  },
 }
 
 ---@param overrides? table<string, boolean> autocmds by name, `false` skips one

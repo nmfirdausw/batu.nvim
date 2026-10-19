@@ -271,6 +271,7 @@ Available autocmds:
 | `restore_cursor` | `BufReadPost`  | Restore the cursor to its last known position on reopen |
 | `auto_create_dir` | `BufWritePre` | Create missing parent directories before writing a file |
 | `auto_reload`    | `FocusGained`, `BufEnter` | Reload buffers changed on disk outside of Neovim |
+| `close_with_q`   | `FileType`     | Close help, quickfix, man and similar buffers with `q`  |
 
 `osc7` accepts:
 
