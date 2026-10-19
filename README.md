@@ -231,10 +231,12 @@ require("batu").setup({
 
 Available keymaps:
 
-| Mode | Key | Action                                    |
-| ---- | --- | ----------------------------------------- |
-| `x`  | `<` | Shift left, keeping the visual selection  |
-| `x`  | `>` | Shift right, keeping the visual selection |
+| Mode    | Key              | Action                                                    |
+| ------- | ---------------- | --------------------------------------------------------- |
+| `x`     | `<`              | Shift left, keeping the visual selection                  |
+| `x`     | `>`              | Shift right, keeping the visual selection                 |
+| `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
+| `n`, `x` | `k`, `<Up>`     | Move up by visual line when wrapped, by count otherwise   |
 
 `osc7` accepts:
 

@@ -5,12 +5,23 @@ local M = {}
 
 ---@type table<string, table<string, {[1]: string|function, [2]: table}>>
 local defaults = {
+  n = {},
   x = {
     -- Keep in visual mode while indenting
     ["<"] = { "<gv", { desc = "Shift left" } },
     [">"] = { ">gv", { desc = "Shift right" } },
   },
 }
+
+-- Move by visual line when wrapped, by count otherwise
+for _, mode in ipairs({ "n", "x" }) do
+  for lhs, motion in pairs({ j = "j", ["<Down>"] = "j", k = "k", ["<Up>"] = "k" }) do
+    defaults[mode][lhs] = {
+      ("v:count == 0 ? 'g%s' : '%s'"):format(motion, motion),
+      { expr = true, silent = true, desc = motion == "j" and "Move down" or "Move up" },
+    }
+  end
+end
 
 ---@param value string|function|table
 ---@param default? {[1]: string|function, [2]: table}
