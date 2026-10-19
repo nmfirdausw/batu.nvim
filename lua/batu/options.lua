@@ -35,4 +35,9 @@ return {
   ignorecase = true,
   inccommand = "split",
   smartcase = true,
+
+  -- completion
+  completeopt = "menuone,noselect",
+  wildignorecase = true,
+  wildmode = "noselect:lastused,full",
 }
