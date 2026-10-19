@@ -265,9 +265,10 @@ require("batu").setup({
 
 Available autocmds:
 
-| Name             | Event          | Action                          |
-| ---------------- | -------------- | ------------------------------- |
-| `highlight_yank` | `TextYankPost` | Briefly highlight yanked text   |
+| Name             | Event          | Action                                                  |
+| ---------------- | -------------- | ------------------------------------------------------- |
+| `highlight_yank` | `TextYankPost` | Briefly highlight yanked text                           |
+| `restore_cursor` | `BufReadPost`  | Restore the cursor to its last known position on reopen |
 
 `osc7` accepts:
 
