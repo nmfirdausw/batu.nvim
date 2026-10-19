@@ -166,6 +166,16 @@ Batu simply provides a carefully designed editor experience that integrates natu
 
 # Installation
 
+Requires Neovim with `vim.pack` (0.12+).
+
+Add Batu to your `init.lua`:
+
+```lua
+vim.pack.add({ "https://github.com/nmfirdausw/batu.nvim" })
+
+require("batu").setup()
+```
+
 That's it.
 
 No templates.
@@ -175,6 +185,26 @@ No migration guides.
 No replacing your ~/.config/nvim.
 
 Just install, configure, and start editing.
+
+## Configuration
+
+`setup()` applies Batu's defaults. Pass options only for what you want to change:
+
+```lua
+require("batu").setup({
+  options = {
+    shiftwidth = 2,
+    tabstop = 2,
+    softtabstop = 2,
+  },
+})
+```
+
+`options` accepts:
+
+- `true` (default): apply Batu's defaults
+- `false`: apply none
+- a table: apply the defaults with your values merged on top
 
 ---
 
