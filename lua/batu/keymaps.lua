@@ -5,7 +5,13 @@ local M = {}
 
 ---@type table<string, table<string, {[1]: string|function, [2]: table}>>
 local defaults = {
-  n = {},
+  n = {
+    -- Keep cursor centered while scrolling/searching
+    ["<C-d>"] = { "<C-d>zz", { desc = "Scroll down" } },
+    ["<C-u>"] = { "<C-u>zz", { desc = "Scroll up" } },
+    n = { "nzz", { desc = "Next search result" } },
+    N = { "Nzz", { desc = "Previous search result" } },
+  },
   x = {
     -- Keep in visual mode while indenting
     ["<"] = { "<gv", { desc = "Shift left" } },

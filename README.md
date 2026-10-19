@@ -236,6 +236,8 @@ Available keymaps:
 | `x`     | `<`              | Shift left, keeping the visual selection                  |
 | `x`     | `>`              | Shift right, keeping the visual selection                 |
 | `x`     | `J`, `K`         | Move the selected lines down or up                        |
+| `n`     | `<C-d>`, `<C-u>` | Scroll half a page, keeping the cursor centered           |
+| `n`     | `n`, `N`         | Jump to the next or previous search result, centered      |
 | `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
 | `n`, `x` | `k`, `<Up>`     | Move up by visual line when wrapped, by count otherwise   |
 
