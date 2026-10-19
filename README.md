@@ -206,6 +206,36 @@ require("batu").setup({
 - `false`: apply none
 - a table: apply the defaults with your values merged on top
 
+`keymaps` accepts:
+
+- `true` (default): apply Batu's default keymaps
+- `false`: apply none
+- a table: apply the defaults, plus your own and changes to them, per mode and key
+
+Each value is one of:
+
+- `false`: skip a Batu keymap
+- a string or function: set (or replace) the keymap's right-hand side
+- a table `{ rhs, desc = "...", ... }`: the same, with any `vim.keymap.set` option
+
+```lua
+require("batu").setup({
+  keymaps = {
+    x = { [">"] = false },                              -- skip a default
+    n = {
+      ["<leader>w"] = { "<cmd>write<CR>", desc = "Save" }, -- add your own
+    },
+  },
+})
+```
+
+Available keymaps:
+
+| Mode | Key | Action                                    |
+| ---- | --- | ----------------------------------------- |
+| `x`  | `<` | Shift left, keeping the visual selection  |
+| `x`  | `>` | Shift right, keeping the visual selection |
+
 `osc7` accepts:
 
 - `false` (default): do nothing
