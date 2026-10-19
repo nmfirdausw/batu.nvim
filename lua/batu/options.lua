@@ -30,4 +30,9 @@ return {
   signcolumn = "yes",
   splitbelow = true,
   splitright = true,
+
+  -- search
+  ignorecase = true,
+  inccommand = "split",
+  smartcase = true,
 }
