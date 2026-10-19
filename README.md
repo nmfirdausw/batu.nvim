@@ -206,6 +206,14 @@ require("batu").setup({
 - `false`: apply none
 - a table: apply the defaults with your values merged on top
 
+`leader` accepts:
+
+- `" "` (default): use space for `<leader>` and `<localleader>`
+- another string: use that key instead
+- `false`: leave them alone
+
+Batu does not override a leader you have already set, so `vim.g.mapleader = ","` before `setup()` still wins. Set the leader before defining any `<leader>` mappings, or it won't apply to them.
+
 `keymaps` accepts:
 
 - `true` (default): apply Batu's default keymaps
