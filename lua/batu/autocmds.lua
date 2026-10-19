@@ -40,6 +40,14 @@ local defaults = {
       end,
     },
   },
+  -- Reload buffers changed on disk outside of Neovim
+  auto_reload = {
+    { "FocusGained", "BufEnter" },
+    {
+      desc = "Reload buffers changed on disk outside of Neovim",
+      command = "checktime",
+    },
+  },
 }
 
 ---@param overrides? table<string, boolean> autocmds by name, `false` skips one

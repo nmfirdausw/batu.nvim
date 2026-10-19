@@ -270,6 +270,7 @@ Available autocmds:
 | `highlight_yank` | `TextYankPost` | Briefly highlight yanked text                           |
 | `restore_cursor` | `BufReadPost`  | Restore the cursor to its last known position on reopen |
 | `auto_create_dir` | `BufWritePre` | Create missing parent directories before writing a file |
+| `auto_reload`    | `FocusGained`, `BufEnter` | Reload buffers changed on disk outside of Neovim |
 
 `osc7` accepts:
 
