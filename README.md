@@ -53,6 +53,7 @@ require("batu").setup({
 | `leader`   | `" "`   | another key, or `false` to leave it alone                      |
 | `keymaps`  | `true`  | `false` for none, or a table by mode and key (see below)       |
 | `autocmds` | `true`  | `false` for none, or a table of `name = false` to disable      |
+| `diagnostic` | `true` | `false` to leave Neovim's alone, or a `vim.diagnostic.config()` table merged over the defaults |
 | `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
 | `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
@@ -81,6 +82,10 @@ Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, 
 | `auto_create_dir` | Create missing parent directories on write             |
 | `auto_reload`     | Reload buffers changed on disk                         |
 | `close_with_q`    | Close help, quickfix, man and similar buffers with `q` |
+
+## Diagnostics
+
+Defaults: `severity_sort`, `update_in_insert` and `virtual_text` on. Pass a table to change them, for example `diagnostic = { update_in_insert = false }`.
 
 ## LSP
 

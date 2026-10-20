@@ -8,6 +8,8 @@ local M = {}
 ---  default, a string, function or `{ rhs, desc = ... }` table sets (or replaces) a keymap.
 ---@field autocmds boolean|table<string, boolean> `true` creates Batu's default autocmds, `false`
 ---  creates none, a table creates them except those set to `false`, by name.
+---@field diagnostic boolean|vim.diagnostic.Opts `true` applies Batu's diagnostic defaults, `false` leaves
+---  Neovim's alone, a table applies the defaults with your `vim.diagnostic.config()` values merged on top.
 ---@field lsp false|batu.LspConfig `false` does nothing, a table enables your language `servers`.
 ---@field leader string|false The key used for `<leader>` and `<localleader>`, unless you already set
 ---  `vim.g.mapleader` or `vim.g.maplocalleader`. `false` leaves them alone.
@@ -17,6 +19,7 @@ local defaults = {
   options = true,
   keymaps = true,
   autocmds = true,
+  diagnostic = true,
   lsp = false,
   osc7 = false,
 }
@@ -47,6 +50,10 @@ function M.setup(opts)
 
   if config.autocmds then
     require("batu.autocmds").setup(type(config.autocmds) == "table" and config.autocmds or nil)
+  end
+
+  if config.diagnostic then
+    require("batu.diagnostic").setup(type(config.diagnostic) == "table" and config.diagnostic or nil)
   end
 
   if config.lsp then
