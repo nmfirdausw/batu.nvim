@@ -54,6 +54,7 @@ require("batu").setup({
 | `keymaps`  | `true`  | `false` for none, or a table by mode and key (see below)       |
 | `autocmds` | `true`  | `false` for none, or a table of `name = false` to disable      |
 | `diagnostic` | `true` | `false` to leave Neovim's alone, or a `vim.diagnostic.config()` table merged over the defaults |
+| `completion` | `true` | `{ blink = true }` for [blink.cmp](https://github.com/saghen/blink.cmp), or `false` to leave it alone |
 | `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
 | `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
@@ -90,6 +91,10 @@ Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, 
 ## Diagnostics
 
 Defaults: `severity_sort`, `update_in_insert` and `virtual_text` on. Pass a table to change them, for example `diagnostic = { update_in_insert = false }`.
+
+## Completion
+
+By default Batu uses Neovim's built-in completion: the command-line menu opens as you type, and LSP completion triggers on every letter, digit and `_` instead of only after `.` or `:`. Use `completion = { blink = true }` to install and set up blink.cmp (v2) instead; it also completes the command line, with the menu opening as you type like the native one. Nothing is preselected, and `<CR>` accepts the selected item (or acts as usual when none is selected). Pass a table, `completion = { blink = { keymap = { preset = "super-tab" } } }`, to give blink its own options, which are merged over Batu's. `completion = false` leaves completion untouched.
 
 ## LSP
 
