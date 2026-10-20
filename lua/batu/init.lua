@@ -10,6 +10,8 @@ local M = {}
 ---  creates none, a table creates them except those set to `false`, by name.
 ---@field diagnostic boolean|vim.diagnostic.Opts `true` applies Batu's diagnostic defaults, `false` leaves
 ---  Neovim's alone, a table applies the defaults with your `vim.diagnostic.config()` values merged on top.
+---@field completion boolean `true` uses Neovim's built-in completion (LSP completion as you type, and an
+---  automatic command-line menu), `false` leaves completion alone.
 ---@field lsp false|batu.LspConfig `false` does nothing, a table enables your language `servers`.
 ---@field leader string|false The key used for `<leader>` and `<localleader>`, unless you already set
 ---  `vim.g.mapleader` or `vim.g.maplocalleader`. `false` leaves them alone.
@@ -20,6 +22,7 @@ local defaults = {
   keymaps = true,
   autocmds = true,
   diagnostic = true,
+  completion = true,
   lsp = false,
   osc7 = false,
 }
@@ -54,6 +57,10 @@ function M.setup(opts)
 
   if config.diagnostic then
     require("batu.diagnostic").setup(type(config.diagnostic) == "table" and config.diagnostic or nil)
+  end
+
+  if config.completion then
+    require("batu.completion").setup()
   end
 
   if config.lsp then
