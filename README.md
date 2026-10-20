@@ -1,174 +1,27 @@
 # 🪨 batu.nvim
 
 > **Simple by nature. Refined by design.**
->
-> A modern Neovim editor built on thoughtful defaults.
 
----
+A modern Neovim editor built on thoughtful defaults.
 
-## What is batu.nvim?
+Batu doesn't replace Neovim. It refines it with sensible defaults and a calm interface, and it leaves the editor you know in place. Install it like any plugin and keep your own config. There's no starter repo and no framework.
 
-Neovim is already one of the finest text editors ever created.
+A stone becomes something lasting through intention and craftsmanship, not complexity. Batu follows the same idea: every feature has a reason, and nothing is added just because everyone else has it.
 
-**batu.nvim** doesn't try to replace it.
+## Philosophy
 
-Instead, it refines the experience through careful craftsmanship, sensible defaults, and modern design—without hiding the editor you already know and love.
+- **Simplicity over complexity.** Good defaults remove decisions. Install, start editing, and configure only what matters to you.
+- **Native before dependencies.** Batu uses what Neovim already provides and adds a plugin only when it earns its place.
+- **Thoughtful craftsmanship.** Statusline, statuscolumn, tabline, highlights and window layout are all deliberate choices.
+- **Modern without excess.** Minimal means intentional, not empty.
+- **Your editor stays yours.** Your `init.lua`, plugins and workflow are untouched.
 
-Install it like any other plugin.
+**Batu is** a refined set of defaults and a solid base for your own workflow.
+**Batu is not** an IDE, a starter config, a plugin bundle, or a framework that owns your configuration.
 
-Keep your own configuration.
+## Install
 
-Customize only when you need to.
-
-No starter repository.
-
-No framework.
-
-No unnecessary abstraction.
-
-Just Neovim, thoughtfully refined.
-
----
-
-# Why Batu?
-
-A stone begins as something ordinary.
-
-With time, intention, and craftsmanship, it becomes something enduring.
-
-Some become the foundation of great architecture.
-
-Others become sculptures.
-
-Others become precious gemstones.
-
-The value isn't found in complexity—it is found in refinement.
-
-**batu.nvim** follows the same philosophy.
-
-Neovim is already an exceptional foundation.
-
-Rather than rebuilding it from scratch, Batu carefully refines the experience while preserving what makes Neovim great.
-
-Every feature exists for a reason.
-
-Every default has a purpose.
-
-Nothing is added simply because everyone else has it.
-
----
-
-# Philosophy
-
-## Simplicity over complexity
-
-Good defaults should remove decisions, not create more of them.
-
-Install Batu and start editing.
-
-Configure only what matters to you.
-
----
-
-## Native before dependencies
-
-Neovim already provides an incredible foundation.
-
-Whenever possible, Batu embraces native functionality first and adds plugins only when they provide genuine value.
-
-Dependencies should enhance the editor—not define it.
-
----
-
-## Thoughtful craftsmanship
-
-Every detail matters.
-
-Spacing.
-
-Typography.
-
-Highlights.
-
-Statusline.
-
-Statuscolumn.
-
-Tabline.
-
-Window layout.
-
-Nothing exists by accident.
-
-A polished editor is the result of hundreds of small decisions.
-
----
-
-## Modern without excess
-
-Modern doesn't mean filling every corner of the screen.
-
-It means creating an interface that feels calm, predictable, and enjoyable to use.
-
-Minimal doesn't mean empty.
-
-It means intentional.
-
----
-
-## Your editor remains yours
-
-Most Neovim distributions ask you to replace your configuration.
-
-Batu doesn't.
-
-Your init.lua stays yours.
-
-Your plugins stay yours.
-
-Your workflow stays yours.
-
-Batu simply provides a carefully designed editor experience that integrates naturally into your configuration.
-
----
-
-# Principles
-
-- 🪨 Thoughtful defaults
-- 🌿 Native-first design
-- 🧩 Modular architecture
-- ✨ Beautiful without distraction
-- 🖱️ Mouse-friendly where it improves usability
-- 📦 Installable like a plugin
-- 🔧 Easy to understand
-- 🚀 Easy to extend
-
----
-
-# What Batu is
-
-- A modern Neovim editor
-- A refined editing experience
-- A carefully designed set of defaults
-- A polished user interface
-- A solid foundation for your own workflow
-
----
-
-# What Batu is not
-
-- An IDE
-- A starter configuration
-- A plugin bundle
-- A framework that owns your configuration
-
----
-
-# Installation
-
-Requires Neovim with `vim.pack` (0.12+).
-
-Add Batu to your `init.lua`:
+Requires Neovim 0.12+ (`vim.pack`).
 
 ```lua
 vim.pack.add({ "https://github.com/nmfirdausw/batu.nvim" })
@@ -176,190 +29,86 @@ vim.pack.add({ "https://github.com/nmfirdausw/batu.nvim" })
 require("batu").setup()
 ```
 
-That's it.
+## Configure
 
-No templates.
-
-No migration guides.
-
-No replacing your ~/.config/nvim.
-
-Just install, configure, and start editing.
-
-## Configuration
-
-`setup()` applies Batu's defaults. Pass options only for what you want to change:
+Every key is optional. Pass only what you want to change.
 
 ```lua
 require("batu").setup({
-  options = {
-    shiftwidth = 2,
-    tabstop = 2,
-    softtabstop = 2,
-  },
-})
-```
-
-`options` accepts:
-
-- `true` (default): apply Batu's defaults
-- `false`: apply none
-- a table: apply the defaults with your values merged on top
-
-`leader` accepts:
-
-- `" "` (default): use space for `<leader>` and `<localleader>`
-- another string: use that key instead
-- `false`: leave them alone
-
-Batu does not override a leader you have already set, so `vim.g.mapleader = ","` before `setup()` still wins. Set the leader before defining any `<leader>` mappings, or it won't apply to them.
-
-`keymaps` accepts:
-
-- `true` (default): apply Batu's default keymaps
-- `false`: apply none
-- a table: apply the defaults, plus your own and changes to them, per mode and key
-
-Each value is one of:
-
-- `false`: skip a Batu keymap
-- a string or function: set (or replace) the keymap's right-hand side
-- a table `{ rhs, desc = "...", ... }`: the same, with any `vim.keymap.set` option
-
-```lua
-require("batu").setup({
+  leader = ",",
+  options = { shiftwidth = 2, tabstop = 2, softtabstop = 2 },
   keymaps = {
-    x = { [">"] = false },                              -- skip a default
-    n = {
-      ["<leader>w"] = { "<cmd>write<CR>", desc = "Save" }, -- add your own
-    },
+    x = { [">"] = false },                                -- skip a default
+    n = { ["<leader>w"] = { "<cmd>write<CR>", desc = "Save" } }, -- add your own
   },
-})
-```
-
-Available keymaps:
-
-| Mode    | Key              | Action                                                    |
-| ------- | ---------------- | --------------------------------------------------------- |
-| `x`     | `<`              | Shift left, keeping the visual selection                  |
-| `x`     | `>`              | Shift right, keeping the visual selection                 |
-| `x`     | `p`              | Paste over the selection without overwriting the register |
-| `x`     | `J`, `K`         | Move the selected lines down or up                        |
-| `n`     | `Y`              | Yank to the end of the line, matching `D` and `C`         |
-| `n`     | `<C-d>`, `<C-u>` | Scroll half a page, keeping the cursor centered           |
-| `n`     | `n`, `N`         | Jump to the next or previous search result, centered      |
-| `n`, `x` | `j`, `<Down>`   | Move down by visual line when wrapped, by count otherwise |
-| `n`, `x` | `k`, `<Up>`     | Move up by visual line when wrapped, by count otherwise   |
-
-`autocmds` accepts:
-
-- `true` (default): create Batu's default autocmds
-- `false`: create none
-- a table: create the defaults except those set to `false`, by name
-
-```lua
-require("batu").setup({
   autocmds = { highlight_yank = false },
+  lsp = { servers = { lua_ls = true }, inlay_hints = true },
+  osc7 = true,
 })
 ```
 
-Available autocmds:
+| Key        | Default | Values                                                         |
+| ---------- | ------- | -------------------------------------------------------------- |
+| `options`  | `true`  | `false` for none, or a table merged over the defaults          |
+| `leader`   | `" "`   | another key, or `false` to leave it alone                      |
+| `keymaps`  | `true`  | `false` for none, or a table by mode and key (see below)       |
+| `autocmds` | `true`  | `false` for none, or a table of `name = false` to disable      |
+| `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
+| `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
-| Name             | Event          | Action                                                  |
-| ---------------- | -------------- | ------------------------------------------------------- |
-| `highlight_yank` | `TextYankPost` | Briefly highlight yanked text                           |
-| `restore_cursor` | `BufReadPost`  | Restore the cursor to its last known position on reopen |
-| `auto_create_dir` | `BufWritePre` | Create missing parent directories before writing a file |
-| `auto_reload`    | `FocusGained`, `BufEnter` | Reload buffers changed on disk outside of Neovim |
-| `close_with_q`   | `FileType`     | Close help, quickfix, man and similar buffers with `q`  |
+An existing `vim.g.mapleader` is never overridden. Set the leader before any `<leader>` mappings.
 
-`lsp` accepts:
+## Keymaps
 
-- `false` (default): do nothing
-- a table: set up language servers
+Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, desc = "...", ... }` with any `vim.keymap.set` option.
 
-Batu does not install servers. It uses Neovim's native `vim.lsp.config()` and `vim.lsp.enable()`, and gets server configs one of two ways.
+| Mode    | Key                  | Action                                                |
+| ------- | -------------------- | ----------------------------------------------------- |
+| `x`     | `<` `>`              | Shift, keeping the selection                          |
+| `x`     | `p`                  | Paste without overwriting the register                |
+| `x`     | `J` `K`              | Move selected lines down or up                        |
+| `n`     | `Y`                  | Yank to end of line                                   |
+| `n`     | `<C-d>` `<C-u>`      | Half-page scroll, cursor centered                     |
+| `n`     | `n` `N`              | Next or previous match, centered                      |
+| `n` `x` | `j` `k` (and arrows) | Visual-line movement when wrapped, by count otherwise |
 
-With [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig), which Batu installs and loads for you:
+## Autocmds
+
+| Name              | Action                                                 |
+| ----------------- | ------------------------------------------------------ |
+| `highlight_yank`  | Briefly highlight yanked text                          |
+| `restore_cursor`  | Restore the last cursor position on reopen             |
+| `auto_create_dir` | Create missing parent directories on write             |
+| `auto_reload`     | Reload buffers changed on disk                         |
+| `close_with_q`    | Close help, quickfix, man and similar buffers with `q` |
+
+## LSP
+
+Batu doesn't install servers. It uses `vim.lsp.config()` and `vim.lsp.enable()`. Server configs come from one of two places.
+
+**nvim-lspconfig** (Batu installs and loads it):
 
 ```lua
-require("batu").setup({
-  lsp = {
-    lspconfig = true,
-    servers = {
-      lua_ls = true,                                             -- use nvim-lspconfig's config
-      gopls = { settings = { gopls = { staticcheck = true } } }, -- merge on top of it
-      pyright = false,                                           -- skip
-    },
+lsp = {
+  lspconfig = true,
+  servers = {
+    lua_ls = true,                                             -- use lspconfig's config
+    gopls = { settings = { gopls = { staticcheck = true } } }, -- merge on top
+    pyright = false,                                           -- skip
   },
-})
-```
-
-Or with your own configs, in `~/.config/nvim/lsp/<name>.lua`:
-
-```lua
--- ~/.config/nvim/lsp/lua_ls.lua
-return {
-  cmd = { "lua-language-server" },
-  filetypes = { "lua" },
-  root_markers = { ".luarc.json", ".git" },
 }
 ```
 
-```lua
-require("batu").setup({ lsp = { servers = { lua_ls = true } } })
-```
+**Your own** `~/.config/nvim/lsp/<name>.lua`, then `lsp = { servers = { lua_ls = true } }`.
 
-`inlay_hints` and `codelens` accept:
+| Option        | Default | Description                                          |
+| ------------- | ------- | ---------------------------------------------------- |
+| `inlay_hints` | `false` | Enable inlay hints where the server supports them    |
+| `codelens`    | `false` | Enable code lenses where the server supports them    |
+| `keymaps`     | `true`  | `grh` toggles inlay hints, `grl` toggles code lenses |
 
-- `false` (default): don't enable
-- `true`: enable in buffers whose server supports it
-
-```lua
-require("batu").setup({
-  lsp = {
-    servers = { lua_ls = true },
-    inlay_hints = true,
-    codelens = true,
-  },
-})
-```
-
-`keymaps` accepts:
-
-- `true` (default): set the toggles below in buffers whose server supports them
-- `false`: set none
-
-| Key   | Action                               |
-| ----- | ------------------------------------ |
-| `grh` | Toggle inlay hints in the buffer     |
-| `grl` | Toggle code lenses in the buffer     |
-
-Neovim's own LSP keymaps (`grn`, `gra`, `grr`, `gri`, `grt`, `grx`, `gO`, `K`) apply in buffers with a server.
-
-`osc7` accepts:
-
-- `false` (default): do nothing
-- `true`: sync Neovim's working directory to the directory your terminal reports via OSC 7 (`:terminal` buffers)
+Neovim's built-in LSP maps (`grn`, `gra`, `grr`, `gri`, `grt`, `grx`, `gO`, `K`) work as usual.
 
 ---
 
-# The Vision
-
-There are countless Neovim configurations.
-
-There are countless plugin collections.
-
-Batu aims to be something different.
-
-Not another configuration.
-
-Not another framework.
-
-But a thoughtfully crafted editor experience that feels complete from the very first launch, while remaining unmistakably Neovim.
-
----
-
-> **Simple by nature. Refined by design.**
-
-Build on stone.
+*Build on stone.*
