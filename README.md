@@ -94,7 +94,7 @@ Defaults: `severity_sort`, `update_in_insert` and `virtual_text` on. Pass a tabl
 
 ## Completion
 
-By default Batu uses Neovim's built-in completion: the command-line menu opens as you type, and LSP completion triggers on every letter, digit and `_` instead of only after `.` or `:`. Use `completion = { blink = true }` to install and set up blink.cmp (v2) instead; it also handles the command line. blink v2 has no prebuilt binaries, so the first start (and the first after each update) compiles its Rust matcher with `cargo`, which takes a moment. It needs `cargo` and errors without it. Pass a table, `completion = { blink = { keymap = { preset = "super-tab" } } }`, to give blink its own options. `completion = false` leaves completion untouched.
+By default Batu uses Neovim's built-in completion: the command-line menu opens as you type, and LSP completion triggers on every letter, digit and `_` instead of only after `.` or `:`. Use `completion = { blink = true }` to install and set up blink.cmp (v2) instead; it also completes the command line, with the menu opening as you type like the native one. Nothing is preselected, and `<CR>` accepts the selected item (or acts as usual when none is selected). Pass a table, `completion = { blink = { keymap = { preset = "super-tab" } } }`, to give blink its own options, which are merged over Batu's. `completion = false` leaves completion untouched.
 
 ## LSP
 

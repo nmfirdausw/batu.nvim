@@ -44,7 +44,24 @@ local function native()
   })
 end
 
----@param opts? table blink.cmp options
+---@type table blink.cmp options
+local blink_defaults = {
+  -- <CR> accepts the selected item, and inserts a newline when none is selected.
+  keymap = { preset = "default", ["<CR>"] = { "accept", "fallback" } },
+  completion = {
+    list = { selection = { preselect = false } },
+  },
+  cmdline = {
+    completion = {
+      -- Show the menu while typing, like the native command-line menu, instead of only on <Tab>.
+      menu = { auto_show = true },
+      -- Nothing preselected, so <CR> runs the command unless you picked an item.
+      list = { selection = { preselect = false } },
+    },
+  },
+}
+
+---@param opts? table blink.cmp options merged over the defaults
 local function blink(opts)
   if vim.fn.executable("cargo") == 0 then
     error("batu.completion: blink.cmp needs `cargo` to build its fuzzy matcher, install Rust (https://rustup.rs)", 0)
@@ -61,7 +78,7 @@ local function blink(opts)
   -- v2 has no prebuilt binaries for main. This builds the Rust fuzzy matcher on first run and after
   -- an update, and does nothing otherwise.
   blink_cmp.build():pwait()
-  blink_cmp.setup(opts)
+  blink_cmp.setup(vim.tbl_deep_extend("force", blink_defaults, opts or {}))
 
   -- Must run before the language servers are enabled so they all advertise blink's capabilities.
   vim.lsp.config("*", { capabilities = blink_cmp.get_lsp_capabilities() })
