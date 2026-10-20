@@ -310,7 +310,32 @@ return {
 require("batu").setup({ lsp = { servers = { lua_ls = true } } })
 ```
 
-Batu sets no LSP keymaps. Neovim's own (`grn`, `gra`, `grr`, `gri`, `grt`, `gO`, `K`) apply in buffers with a server.
+`inlay_hints` and `codelens` accept:
+
+- `false` (default): don't enable
+- `true`: enable in buffers whose server supports it
+
+```lua
+require("batu").setup({
+  lsp = {
+    servers = { lua_ls = true },
+    inlay_hints = true,
+    codelens = true,
+  },
+})
+```
+
+`keymaps` accepts:
+
+- `true` (default): set the toggles below in buffers whose server supports them
+- `false`: set none
+
+| Key   | Action                               |
+| ----- | ------------------------------------ |
+| `grh` | Toggle inlay hints in the buffer     |
+| `grl` | Toggle code lenses in the buffer     |
+
+Neovim's own LSP keymaps (`grn`, `gra`, `grr`, `gri`, `grt`, `grx`, `gO`, `K`) apply in buffers with a server.
 
 `osc7` accepts:
 
