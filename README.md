@@ -273,6 +273,70 @@ Available autocmds:
 | `auto_reload`    | `FocusGained`, `BufEnter` | Reload buffers changed on disk outside of Neovim |
 | `close_with_q`   | `FileType`     | Close help, quickfix, man and similar buffers with `q`  |
 
+`lsp` accepts:
+
+- `false` (default): do nothing
+- a table: set up language servers
+
+Batu does not install servers. It uses Neovim's native `vim.lsp.config()` and `vim.lsp.enable()`, and gets server configs one of two ways.
+
+With [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig), which Batu installs and loads for you:
+
+```lua
+require("batu").setup({
+  lsp = {
+    lspconfig = true,
+    servers = {
+      lua_ls = true,                                             -- use nvim-lspconfig's config
+      gopls = { settings = { gopls = { staticcheck = true } } }, -- merge on top of it
+      pyright = false,                                           -- skip
+    },
+  },
+})
+```
+
+Or with your own configs, in `~/.config/nvim/lsp/<name>.lua`:
+
+```lua
+-- ~/.config/nvim/lsp/lua_ls.lua
+return {
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
+  root_markers = { ".luarc.json", ".git" },
+}
+```
+
+```lua
+require("batu").setup({ lsp = { servers = { lua_ls = true } } })
+```
+
+`inlay_hints` and `codelens` accept:
+
+- `false` (default): don't enable
+- `true`: enable in buffers whose server supports it
+
+```lua
+require("batu").setup({
+  lsp = {
+    servers = { lua_ls = true },
+    inlay_hints = true,
+    codelens = true,
+  },
+})
+```
+
+`keymaps` accepts:
+
+- `true` (default): set the toggles below in buffers whose server supports them
+- `false`: set none
+
+| Key   | Action                               |
+| ----- | ------------------------------------ |
+| `grh` | Toggle inlay hints in the buffer     |
+| `grl` | Toggle code lenses in the buffer     |
+
+Neovim's own LSP keymaps (`grn`, `gra`, `grr`, `gri`, `grt`, `grx`, `gO`, `K`) apply in buffers with a server.
+
 `osc7` accepts:
 
 - `false` (default): do nothing
