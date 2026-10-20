@@ -13,6 +13,52 @@ local defaults = {
     ["<C-u>"] = { "<C-u>zz", { desc = "Scroll up" } },
     n = { "nzz", { desc = "Next search result" } },
     N = { "Nzz", { desc = "Previous search result" } },
+    -- Diagnostics
+    ["<C-w>d"] = {
+      function()
+        local _, winid = vim.diagnostic.open_float()
+        if not winid then
+          return
+        end
+        -- Hide inline diagnostics while the float shows the same ones
+        local virtual_text = vim.diagnostic.config().virtual_text
+        local virtual_lines = vim.diagnostic.config().virtual_lines
+        vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
+        vim.api.nvim_create_autocmd("WinClosed", {
+          pattern = tostring(winid),
+          once = true,
+          callback = function()
+            vim.diagnostic.config({ virtual_text = virtual_text, virtual_lines = virtual_lines })
+          end,
+        })
+      end,
+      { desc = "Open diagnostic float of the line" },
+    },
+    ["<leader>dv"] = {
+      function()
+        local show_text = not vim.diagnostic.config().virtual_text
+        vim.diagnostic.config({ virtual_text = show_text, virtual_lines = not show_text })
+      end,
+      { desc = "Toggle diagnostic virtual text/lines" },
+    },
+    ["<leader>dt"] = {
+      function()
+        vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+      end,
+      { desc = "Toggle diagnostics" },
+    },
+    ["<leader>dl"] = {
+      function()
+        vim.diagnostic.setloclist()
+      end,
+      { desc = "Send buffer diagnostics to location list" },
+    },
+    ["<leader>dq"] = {
+      function()
+        vim.diagnostic.setqflist()
+      end,
+      { desc = "Send workspace diagnostics to quickfix list" },
+    },
   },
   x = {
     -- Keep in visual mode while indenting

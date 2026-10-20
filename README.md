@@ -71,6 +71,10 @@ Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, 
 | `n`     | `Y`                  | Yank to end of line                                   |
 | `n`     | `<C-d>` `<C-u>`      | Half-page scroll, cursor centered                     |
 | `n`     | `n` `N`              | Next or previous match, centered                      |
+| `n`     | `<C-w>d`             | Diagnostic float of the line, hiding inline text      |
+| `n`     | `<leader>dv`         | Toggle diagnostic virtual text/lines                  |
+| `n`     | `<leader>dt`         | Toggle diagnostics                                    |
+| `n`     | `<leader>dl` `<leader>dq` | Diagnostics to location list / quickfix          |
 | `n` `x` | `j` `k` (and arrows) | Visual-line movement when wrapped, by count otherwise |
 
 ## Autocmds
