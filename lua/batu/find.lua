@@ -7,13 +7,14 @@ local M = {}
 ---@type boolean whether `:find` is searched with fff
 local use_fff = false
 
----@type { cwd: string, files: string[] }?
-local cache
+---@type table<string, string[]> file lists by directory, cleared after each command line
+local cache = {}
 
---- Every file under the cwd, ignoring `.git` and what your ignore files list when a tool that knows
+--- Every file under `root`, ignoring `.git` and what your ignore files list when a tool that knows
 --- them is installed.
+---@param root string
 ---@return string[]
-local function list_files()
+local function list_files(root)
   local commands = {
     { "rg", "--files", "--hidden", "--glob", "!.git" },
     { "fd", "--type", "file", "--hidden", "--exclude", ".git" },
@@ -22,7 +23,7 @@ local function list_files()
 
   for _, cmd in ipairs(commands) do
     if vim.fn.executable(cmd[1]) == 1 then
-      local result = vim.system(cmd, { text = true }):wait()
+      local result = vim.system(cmd, { text = true, cwd = root }):wait()
       if result.code == 0 then
         return vim.split(result.stdout or "", "\n", { trimempty = true })
       end
@@ -30,7 +31,7 @@ local function list_files()
   end
 
   local files = {}
-  for path, kind in vim.fs.dir(".", { depth = math.huge, skip = function(dir) return dir ~= ".git" end }) do
+  for path, kind in vim.fs.dir(root, { depth = math.huge, skip = function(dir) return dir ~= ".git" end }) do
     if kind == "file" then
       table.insert(files, path)
     end
@@ -38,13 +39,28 @@ local function list_files()
   return files
 end
 
+---@param root? string defaults to the cwd
 ---@return string[]
-local function files()
-  local cwd = vim.uv.cwd() or ""
-  if not cache or cache.cwd ~= cwd then
-    cache = { cwd = cwd, files = list_files() }
+local function files(root)
+  root = root or vim.uv.cwd() or "."
+  cache[root] = cache[root] or list_files(root)
+  return cache[root]
+end
+
+--- Splits `../src/ma` into the directory as typed (`../src/`), its absolute path and the query (`ma`).
+--- Only a path that leaves the cwd is split, anything else is a query for the cwd.
+---@param cmdarg string
+---@return string? prefix
+---@return string? root
+---@return string? query
+local function split_path(cmdarg)
+  local prefix, query = cmdarg:match("^(.*/)(.*)$")
+  if prefix and (prefix:match("^%.%./") or prefix:match("^/") or prefix:match("^~/")) then
+    local root = vim.fs.normalize(vim.fn.fnamemodify(vim.fn.expand(prefix), ":p"))
+    if vim.fn.isdirectory(root) == 1 then
+      return prefix, root, query
+    end
   end
-  return cache.files
 end
 
 ---@param cmdarg string
@@ -66,6 +82,18 @@ end
 ---@param cmdarg string
 ---@return string[]
 function M.findfunc(cmdarg)
+  -- `../foo` searches that directory instead, without fff so it keeps its index of the cwd.
+  local prefix, root, query = split_path(cmdarg)
+  if prefix then
+    local list = files(root)
+    if query ~= "" then
+      list = vim.fn.matchfuzzy(list, query)
+    end
+    return vim.tbl_map(function(path)
+      return prefix .. path
+    end, list)
+  end
+
   if use_fff then
     local paths = fff_files(cmdarg)
     if paths then
@@ -115,7 +143,7 @@ function M.setup(opts)
     group = vim.api.nvim_create_augroup("batu.find", { clear = true }),
     desc = "Forget the cached file list for :find",
     callback = function()
-      cache = nil
+      cache = {}
     end,
   })
 end
