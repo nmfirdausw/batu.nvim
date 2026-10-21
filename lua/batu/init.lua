@@ -15,6 +15,9 @@ local M = {}
 ---  alone, a table sets `autoshow = true` to open the menu as you type, `documentation = true` and
 ---  `signature_help = true` to show item documentation and signature help, and `blink = true` (or a table of
 ---  blink.cmp options) to use blink.cmp instead.
+---@field format boolean|batu.FormatConfig `true` (default) sets up formatting: `<leader>cf` formats the buffer
+---  and `<leader>tf` toggles format on save, which is off unless a table sets `on_save = true`. `false`
+---  leaves formatting alone.
 ---@field lsp false|batu.LspConfig `false` does nothing, a table enables your language `servers`.
 ---@field leader string|false The key used for `<leader>` and `<localleader>`, unless you already set
 ---  `vim.g.mapleader` or `vim.g.maplocalleader`. `false` leaves them alone.
@@ -26,6 +29,7 @@ local defaults = {
   autocmds = true,
   diagnostic = true,
   completion = true,
+  format = true,
   lsp = false,
   osc7 = false,
 }
@@ -65,6 +69,10 @@ function M.setup(opts)
   -- Before lsp, so blink's capabilities are in place when servers are enabled.
   if config.completion then
     require("batu.completion").setup(type(config.completion) == "table" and config.completion or nil)
+  end
+
+  if config.format then
+    require("batu.format").setup(type(config.format) == "table" and config.format or nil)
   end
 
   if config.lsp then
