@@ -56,6 +56,7 @@ require("batu").setup({
 | `diagnostic` | `true` | `false` to leave Neovim's alone, or a `vim.diagnostic.config()` table merged over the defaults |
 | `completion` | `true` | `{ blink = true }` for [blink.cmp](https://github.com/saghen/blink.cmp), or `false` to leave it alone |
 | `format`   | `true`  | `false` to leave it alone, or `{ on_save = true, timeout_ms = 1000 }` |
+| `find`     | `true`  | `false` to leave `:find` alone                                 |
 | `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
 | `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
@@ -111,6 +112,10 @@ vim.b.format_on_save = true
 ```
 
 The other way round works too: keep `on_save = true` and set `vim.b.format_on_save = false` in the ftplugins of the filetypes to skip. `timeout_ms` (default 1000) limits how long a language server may take to format on save. A failing `formatprg` leaves the buffer unchanged. `format = false` leaves formatting alone.
+
+## Find
+
+`:find` fuzzy searches every file under the current directory, instead of matching a path pattern. `:find cfgld` opens `src/deep/config_loader.lua`, and completing it (`<Tab>`, or the menu with `autoshow`) lists the fuzzy matches, best first. The file list comes from `rg`, `fd` or `git ls-files` when one is installed, so ignored files and `.git` are skipped, and from a plain walk of the directory otherwise (skipping only `.git`). It is built once per command line, so new files appear the next time. `find = false` leaves `:find` alone.
 
 ## Completion
 

@@ -18,6 +18,8 @@ local M = {}
 ---@field format boolean|batu.FormatConfig `true` (default) sets up formatting: `<leader>cf` formats the buffer
 ---  and `<leader>tf` toggles format on save, which is off unless a table sets `on_save = true`. `false`
 ---  leaves formatting alone.
+---@field find boolean `true` (default) makes `:find` fuzzy search every file under the cwd. `false` leaves
+---  `:find` alone.
 ---@field lsp false|batu.LspConfig `false` does nothing, a table enables your language `servers`.
 ---@field leader string|false The key used for `<leader>` and `<localleader>`, unless you already set
 ---  `vim.g.mapleader` or `vim.g.maplocalleader`. `false` leaves them alone.
@@ -30,6 +32,7 @@ local defaults = {
   diagnostic = true,
   completion = true,
   format = true,
+  find = true,
   lsp = false,
   osc7 = false,
 }
@@ -73,6 +76,10 @@ function M.setup(opts)
 
   if config.format then
     require("batu.format").setup(type(config.format) == "table" and config.format or nil)
+  end
+
+  if config.find then
+    require("batu.find").setup()
   end
 
   if config.lsp then
