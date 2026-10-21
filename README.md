@@ -56,7 +56,7 @@ require("batu").setup({
 | `diagnostic` | `true` | `false` to leave Neovim's alone, or a `vim.diagnostic.config()` table merged over the defaults |
 | `completion` | `true` | `{ blink = true }` for [blink.cmp](https://github.com/saghen/blink.cmp), or `false` to leave it alone |
 | `format`   | `true`  | `false` to leave it alone, or `{ on_save = true, timeout_ms = 1000 }` |
-| `find`     | `true`  | `false` to leave `:find` alone                                 |
+| `find`     | `true`  | `{ fff = true }` to search with [fff](https://github.com/dmtrKovalenko/fff), or `false` to leave `:find` alone |
 | `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
 | `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
@@ -116,6 +116,8 @@ The other way round works too: keep `on_save = true` and set `vim.b.format_on_sa
 ## Find
 
 `:find` fuzzy searches every file under the current directory, instead of matching a path pattern. `:find cfgld` opens `src/deep/config_loader.lua`, and completing it (`<Tab>`, or the menu with `autoshow`) lists the fuzzy matches, best first. The file list comes from `rg`, `fd` or `git ls-files` when one is installed, so ignored files and `.git` are skipped, and from a plain walk of the directory otherwise (skipping only `.git`). It is built once per command line, so new files appear the next time. `find = false` leaves `:find` alone.
+
+Use `find = { fff = true }` to search with [fff](https://github.com/dmtrKovalenko/fff) instead. Batu installs it with `vim.pack`, downloads its prebuilt binary (or builds it with `cargo`), and calls `require("fff").file_search()` for `:find` and its completion. fff keeps its own index of the cwd, is typo-resistant, ranks the files you open often higher, and understands constraints such as `*.lua` or `git:modified`. Pass a table, `find = { fff = { max_threads = 8 } }`, to give fff its own options. While fff is still indexing the cwd, or if it fails, the search above answers instead.
 
 ## Completion
 
