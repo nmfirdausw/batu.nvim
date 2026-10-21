@@ -96,6 +96,8 @@ Defaults: `severity_sort`, `update_in_insert` and `virtual_text` on. Pass a tabl
 
 By default Batu uses Neovim's built-in completion, and the menu never opens by itself. Open it with `<C-x><C-o>` (LSP omni completion), `<C-n>` or `<C-p>`, or `<Tab>` on the command line. Set `completion = { autoshow = true }` to open the menu as you type instead: on the command line, and in LSP completion, which then triggers on every letter, digit and `_` rather than only after `.` or `:`.
 
+Documentation and signature help are off by default. Set `completion = { documentation = true }` to show the documentation of the selected item next to the menu, and `completion = { signature_help = true }` to show the signature help when you type a call's `(` or `,`. Both work with either engine. In insert mode, `<C-k>` toggles the signature help and `<C-b>` / `<C-f>` scroll the documentation, the same keys blink.cmp uses.
+
 Use `completion = { blink = true }` to install and set up blink.cmp (v2) instead; it follows the same `autoshow` setting, and `<C-n>`/`<C-p>` open its menu too. Nothing is preselected, and `<CR>` accepts the selected item (or acts as usual when none is selected). Pass a table, `completion = { blink = { keymap = { preset = "super-tab" } } }`, to give blink its own options, which are merged over Batu's. `completion = false` leaves completion untouched.
 
 ## LSP
