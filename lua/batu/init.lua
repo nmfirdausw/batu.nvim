@@ -12,7 +12,8 @@ local M = {}
 ---  Neovim's alone, a table applies the defaults with your `vim.diagnostic.config()` values merged on top.
 ---@field completion boolean|batu.CompletionConfig `true` uses Neovim's built-in completion, opened on
 ---  request (`<C-x><C-o>`, `<C-n>`, `<C-p>`, and `<Tab>` on the command line), `false` leaves completion
----  alone, a table sets `autoshow = true` to open the menu as you type, and `blink = true` (or a table of
+---  alone, a table sets `autoshow = true` to open the menu as you type, `documentation = true` and
+---  `signature_help = true` to show item documentation and signature help, and `blink = true` (or a table of
 ---  blink.cmp options) to use blink.cmp instead.
 ---@field lsp false|batu.LspConfig `false` does nothing, a table enables your language `servers`.
 ---@field leader string|false The key used for `<leader>` and `<localleader>`, unless you already set
