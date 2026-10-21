@@ -55,6 +55,7 @@ require("batu").setup({
 | `autocmds` | `true`  | `false` for none, or a table of `name = false` to disable      |
 | `diagnostic` | `true` | `false` to leave Neovim's alone, or a `vim.diagnostic.config()` table merged over the defaults |
 | `completion` | `true` | `{ blink = true }` for [blink.cmp](https://github.com/saghen/blink.cmp), or `false` to leave it alone |
+| `format`   | `true`  | `false` to leave it alone, or `{ on_save = true, timeout_ms = 1000 }` |
 | `lsp`      | `false` | a table, see [LSP](#lsp)                                       |
 | `osc7`     | `false` | `true` to sync the cwd with the terminal's OSC 7 (`:terminal`) |
 
@@ -75,6 +76,9 @@ Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, 
 | `n`     | `<C-w>d`             | Diagnostic float of the line, hiding inline text      |
 | `n`     | `<leader>dv`         | Toggle diagnostic virtual text/lines                  |
 | `n`     | `<leader>dt`         | Toggle diagnostics                                    |
+| `n` `x` | `<leader>cf`         | Format the buffer, or the selection                   |
+| `n` `x` | `gq` `gqq`           | Format, keeping the text when the formatter fails     |
+| `n`     | `<leader>tf` `<leader>tF` | Toggle format on save for the buffer / globally  |
 | `n`     | `<leader>dl` `<leader>dq` | Diagnostics to location list / quickfix          |
 | `n` `x` | `j` `k` (and arrows) | Visual-line movement when wrapped, by count otherwise |
 
@@ -91,6 +95,22 @@ Each entry is `false` (skip), a string or function (set or replace), or `{ rhs, 
 ## Diagnostics
 
 Defaults: `severity_sort`, `update_in_insert` and `virtual_text` on. Pass a table to change them, for example `diagnostic = { update_in_insert = false }`.
+
+## Format
+
+Batu formats with Neovim's own settings, so it follows what `gq` does. By default that is the language server (`vim.lsp.formatexpr`). To use an external formatter for a filetype, set `formatprg` in `ftplugin/<ft>.lua`. It wins over the language server, even though the server attaches later:
+
+```lua
+vim.opt_local.formatprg = "stylua --indent-type Spaces --indent-width 2 --quote-style AutoPreferDouble -"
+```
+
+`<leader>cf` formats the buffer (or the selection in visual mode). `gq` itself is wrapped too, so a failing `formatprg` or custom `formatexpr` keeps your text instead of replacing it with the error. Everything else is Neovim's own `gq`. Format on save is off by default: turn it on with `format = { on_save = true }`, or toggle it with `<leader>tF` for every buffer, or `<leader>tf` for the current buffer only, which works whether it was turned on by `on_save` or by an ftplugin. A buffer's own setting wins over the global one. `<leader>tf` sets `vim.b.batu_format_on_save` for the buffer, and you can set it to `true` or `false` yourself too. To format on save for one filetype only, leave `on_save` off and set it in that filetype's `ftplugin/<ft>.lua`:
+
+```lua
+vim.b.batu_format_on_save = true
+```
+
+The other way round works too: keep `on_save = true` and set `vim.b.batu_format_on_save = false` in the ftplugins of the filetypes to skip. `timeout_ms` (default 1000) limits how long a language server may take to format on save. A failing `formatprg` leaves the buffer unchanged. `format = false` leaves formatting alone.
 
 ## Completion
 

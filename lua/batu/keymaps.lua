@@ -59,8 +59,51 @@ local defaults = {
       end,
       { desc = "Send workspace diagnostics to quickfix list" },
     },
+    -- Formatting
+    gq = {
+      function()
+        return require("batu.format").gq()
+      end,
+      { expr = true, desc = "Format (keeps the text if the formatter fails)" },
+    },
+    gqq = {
+      function()
+        return require("batu.format").gq(true)
+      end,
+      { expr = true, desc = "Format line" },
+    },
+    ["<leader>cf"] = {
+      function()
+        require("batu.format").format()
+      end,
+      { desc = "Format buffer" },
+    },
+    ["<leader>tf"] = {
+      function()
+        require("batu.format").toggle_on_save()
+      end,
+      { desc = "Toggle format on save for the buffer" },
+    },
+    ["<leader>tF"] = {
+      function()
+        require("batu.format").toggle_on_save(true)
+      end,
+      { desc = "Toggle format on save globally" },
+    },
   },
   x = {
+    gq = {
+      function()
+        return require("batu.format").gq()
+      end,
+      { expr = true, desc = "Format selection (keeps the text if the formatter fails)" },
+    },
+    ["<leader>cf"] = {
+      function()
+        require("batu.format").format_selection()
+      end,
+      { desc = "Format selection" },
+    },
     -- Keep in visual mode while indenting
     ["<"] = { "<gv", { desc = "Shift left" } },
     [">"] = { ">gv", { desc = "Shift right" } },
