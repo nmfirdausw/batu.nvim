@@ -2,7 +2,7 @@ local M = {}
 
 ---@class batu.FormatConfig
 ---@field on_save? boolean `true` formats the buffer before every write. `false` (default) formats only on
----  request. Set `vim.b.batu_format_on_save` to `true` or `false` to override this for one buffer.
+---  request. Set `vim.b.format_on_save` to `true` or `false` to override this for one buffer.
 ---@field timeout_ms? integer How long a language server may take to format, in milliseconds. Default 1000.
 
 ---@type { on_save: boolean, timeout_ms: integer, ready: boolean }
@@ -129,7 +129,7 @@ end
 
 ---@param buf integer
 local function enabled(buf)
-  local override = vim.b[buf].batu_format_on_save
+  local override = vim.b[buf].format_on_save
   if override ~= nil then
     return override
   end
@@ -137,8 +137,8 @@ local function enabled(buf)
 end
 
 --- Toggles format on save for the current buffer, whether it came from `on_save` or from
---- `vim.b.batu_format_on_save` set in an ftplugin. With `global`, toggles `on_save` for every buffer
---- instead, except those that set `vim.b.batu_format_on_save`.
+--- `vim.b.format_on_save` set in an ftplugin. With `global`, toggles `on_save` for every buffer
+--- instead, except those that set `vim.b.format_on_save`.
 ---@param global? boolean
 function M.toggle_on_save(global)
   if not state.ready then
@@ -154,7 +154,7 @@ function M.toggle_on_save(global)
 
   local buf = vim.api.nvim_get_current_buf()
   local on = not enabled(buf)
-  vim.b[buf].batu_format_on_save = on
+  vim.b[buf].format_on_save = on
   vim.notify("batu: format on save " .. (on and "on" or "off") .. " for this buffer")
 end
 

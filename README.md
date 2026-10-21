@@ -104,13 +104,13 @@ Batu formats with Neovim's own settings, so it follows what `gq` does. By defaul
 vim.opt_local.formatprg = "stylua --indent-type Spaces --indent-width 2 --quote-style AutoPreferDouble -"
 ```
 
-`<leader>cf` formats the buffer (or the selection in visual mode). `gq` itself is wrapped too, so a failing `formatprg` or custom `formatexpr` keeps your text instead of replacing it with the error. Everything else is Neovim's own `gq`. Format on save is off by default: turn it on with `format = { on_save = true }`, or toggle it with `<leader>tF` for every buffer, or `<leader>tf` for the current buffer only, which works whether it was turned on by `on_save` or by an ftplugin. A buffer's own setting wins over the global one. `<leader>tf` sets `vim.b.batu_format_on_save` for the buffer, and you can set it to `true` or `false` yourself too. To format on save for one filetype only, leave `on_save` off and set it in that filetype's `ftplugin/<ft>.lua`:
+`<leader>cf` formats the buffer (or the selection in visual mode). `gq` itself is wrapped too, so a failing `formatprg` or custom `formatexpr` keeps your text instead of replacing it with the error. Everything else is Neovim's own `gq`. Format on save is off by default: turn it on with `format = { on_save = true }`, or toggle it with `<leader>tF` for every buffer, or `<leader>tf` for the current buffer only, which works whether it was turned on by `on_save` or by an ftplugin. A buffer's own setting wins over the global one. `<leader>tf` sets `vim.b.format_on_save` for the buffer, and you can set it to `true` or `false` yourself too. To format on save for one filetype only, leave `on_save` off and set it in that filetype's `ftplugin/<ft>.lua`:
 
 ```lua
-vim.b.batu_format_on_save = true
+vim.b.format_on_save = true
 ```
 
-The other way round works too: keep `on_save = true` and set `vim.b.batu_format_on_save = false` in the ftplugins of the filetypes to skip. `timeout_ms` (default 1000) limits how long a language server may take to format on save. A failing `formatprg` leaves the buffer unchanged. `format = false` leaves formatting alone.
+The other way round works too: keep `on_save = true` and set `vim.b.format_on_save = false` in the ftplugins of the filetypes to skip. `timeout_ms` (default 1000) limits how long a language server may take to format on save. A failing `formatprg` leaves the buffer unchanged. `format = false` leaves formatting alone.
 
 ## Completion
 
